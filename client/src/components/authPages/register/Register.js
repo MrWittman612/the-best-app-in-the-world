@@ -1,7 +1,32 @@
 import React from 'react';
+import axios from 'axios'
 import { Link } from 'react-router-dom';
+import { response } from "express";
 
 export default function Register() {
+  const [user, setUser] = useState({
+    fname: '',
+    lname: '',
+    email: '',
+    password: '',
+    password2: '',
+  });
+
+  const handleInputChange = (e) => {
+    setUser({...user, [e.target.name]: e.target.value})
+  }
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      cosnt response = await axios.post('/api/register', user)
+      
+    } catch (e) {
+      console.error(e)
+    }
+  };
+
   return (
     <div className='bg-gradient-primary'>
       <div className='container'>
@@ -23,24 +48,26 @@ export default function Register() {
                       <div className='text-center'>
                         <h4 className='text-dark mb-4'>Create an Account!</h4>
                       </div>
-                      <form className='user'>
+                      <form className='user' onSubmit={handleSubmit}>
                         <div className='form-group row'>
                           <div className='col-sm-6 mb-3 mb-sm-0'>
                             <input
                               className='form-control form-control-user'
                               type='text'
-                              id='exampleFirstName'
+                              id='fname'
                               placeholder='First Name'
-                              name='first_name'
+                              name='fname'
+                              value={user.fname}
                             />
                           </div>
                           <div className='col-sm-6'>
                             <input
                               className='form-control form-control-user'
                               type='text'
-                              id='exampleFirstName'
+                              id='lname'
                               placeholder='Last Name'
-                              name='last_name'
+                              name='lname'
+                              value={user.lname}
                             />
                           </div>
                         </div>
@@ -52,6 +79,7 @@ export default function Register() {
                             aria-describedby='emailHelp'
                             placeholder='Email Address'
                             name='email'
+                            value={user.email}
                           />
                         </div>
                         <div className='form-group row'>
@@ -62,21 +90,24 @@ export default function Register() {
                               id='examplePasswordInput'
                               placeholder='Password'
                               name='password'
+                              value={user.password}
                             />
                           </div>
                           <div className='col-sm-6'>
                             <input
                               className='form-control form-control-user'
-                              type='password'
-                              id='exampleRepeatPasswordInput'
+                              type='password2'
+                              id='password2'
                               placeholder='Repeat Password'
-                              name='password_repeat'
+                              name='password2'
+                              value={user.password2}
                             />
                           </div>
                         </div>
                         <button
                           className='btn btn-primary btn-block text-white btn-user'
                           type='submit'
+                          value='Login'
                         >
                           Register Account
                         </button>
