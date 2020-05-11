@@ -1,6 +1,8 @@
 const express = require('express');
-const authRouter = require('./routes/auth.router');
 const connectDB = require('./utils/connectDB');
+const authRouter = require('./routes/auth.router');
+const userRouter = require('./routes/user.router');
+const { protect } = require('./utils/authUtilsFunctions');
 
 const app = express();
 
@@ -10,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 8888;
 
 app.use('/api', authRouter);
+app.use('/api/user', protect, userRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

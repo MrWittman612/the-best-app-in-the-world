@@ -18,13 +18,13 @@ const verifyToken = (token) =>
 exports.verifyToken = verifyToken;
 
 const protect = async (req, res, next) => {
-  const bearer = req.header.authorization;
+  const bearer = req.headers.authorization;
 
-  if (!bearer || !bearer.startWith('Bearer ')) {
+  if (!bearer || !bearer.startsWith('Bearer ')) {
     return res.status(401).end();
   }
 
-  const token = bearer.spilt('Bearer ')[1].trim();
+  const token = bearer.split('Bearer ')[1].trim();
 
   if (!token) {
     return res.status(500).end();

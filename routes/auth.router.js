@@ -8,6 +8,7 @@ router.post('/login', async (req, res) => {
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ msg: 'Email and password are required' });
   }
+  console.log(req.body);
 
   try {
     const user = await User.findOne({ email: req.body.email })

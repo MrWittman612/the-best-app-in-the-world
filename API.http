@@ -1,13 +1,13 @@
 @baseUrl = http://localhost:8888
-@token = 
-@userId = 5ddd3d2c0f2e25298405cbcf
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlYjliY2EwYmFiYTJlMzA5MDZiNGJjMyIsImlhdCI6MTU4OTIzMTAxMCwiZXhwIjoxNTkxODIzMDEwfQ.XWDAy-ba5W3DgcGB4lq12QgpeH6_zwO9hfXxNi0aXUw
+@userId = 
 
 
 ###
 
 # @name loginUser 
 // Login user
-POST {{baseUrl}}/api/register HTTP/1.1
+POST {{baseUrl}}/api/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -19,13 +19,13 @@ Content-Type: application/json
 
 # @name CreateUser
 // Register A User
-POST  {{baseUrl}}/api/signup HTTP/1.1
+POST  {{baseUrl}}/api/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "jim",
-  "email": "jim@test.com",
-  "password": "jimpass"
+  "name": "chad",
+  "email": "chad.m.wittman75@gmail.com",
+  "password": "password"
 }
 
 ###
