@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:8888
+@token = 
+@userId = 5ddd3d2c0f2e25298405cbcf
+
+
+###
+
+# @name loginUser 
+// Login user
+POST {{baseUrl}}/api/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email":"chad.m.wittman75@gmail.com",
+  "password":"password"
+}
+
+###
+
+# @name CreateUser
+// Register A User
+POST  {{baseUrl}}/api/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "jim",
+  "email": "jim@test.com",
+  "password": "jimpass"
+}
+
+###
+
+# @name getMe
+// get user from Bearer token
+GET {{baseUrl}}/api/user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateUser
+// Update A user
+PUT {{baseUrl}}/api/user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "role":"admin"
+}

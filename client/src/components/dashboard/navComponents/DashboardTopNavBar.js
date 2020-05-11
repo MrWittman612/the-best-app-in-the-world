@@ -143,7 +143,7 @@ export function DashboardTopNavBar() {
                   <div className='dropdown-list-image mr-3'>
                     <img
                       className='rounded-circle'
-                      src='assets/img/avatars/avatar4.jpeg?h=fefb30b61c8459a66bd338b7d790c3d5'
+                      src='assets/img/avatars/avatar4.jpeg'
                     />
                     <div className='bg-success status-indicator'></div>
                   </div>

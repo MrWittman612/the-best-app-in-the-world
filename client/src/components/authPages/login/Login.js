@@ -1,19 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export const Login = () => {
+export default function Login() {
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  });
+  console.log(user);
+
+  const updateUser = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+    try {
+      const result = axios.post('/api/login', user);
+
+      console.log(result);
+    } catch (e) {}
+  };
+
   return (
     <div className='bg-gradient-primary'>
-      <div className='container'>
+      <div className='container min-vh-100 py-5'>
         <div className='row justify-content-center'>
           <div className='col-md-9 col-lg-12 col-xl-10'>
-            <div className='card shadow-lg o-hidden border-0 my-5'>
+            <div className='card shadow-lg o-hidden border-0 my-3'>
               <div className='card-body p-0'>
                 <div className='row'>
                   <div className='col-lg-6 d-none d-lg-flex'>
                     <div
                       className='flex-grow-1 bg-login-image'
                       style={{
-                        backgroundImage: url('assets/img/dogs/image3.jpeg'),
+                        backgroundImage: "url('/assets/img/dogs/image3.jpeg')",
                       }}
                     ></div>
                   </div>
@@ -22,7 +43,7 @@ export const Login = () => {
                       <div className='text-center'>
                         <h4 className='text-dark mb-4'>Welcome Back!</h4>
                       </div>
-                      <form className='user'>
+                      <form className='user' onSubmit={loginUser}>
                         <div className='form-group'>
                           <input
                             className='form-control form-control-user'
@@ -31,6 +52,7 @@ export const Login = () => {
                             aria-describedby='emailHelp'
                             placeholder='Enter Email Address...'
                             name='email'
+                            onChange={updateUser}
                           />
                         </div>
                         <div className='form-group'>
@@ -40,9 +62,10 @@ export const Login = () => {
                             id='exampleInputPassword'
                             placeholder='Password'
                             name='password'
+                            onChange={updateUser}
                           />
                         </div>
-                        <div className='form-group'>
+                        {/* <div className='form-group'>
                           <div className='custom-control custom-checkbox small'>
                             <div className='form-check'>
                               <input
@@ -58,21 +81,22 @@ export const Login = () => {
                               </label>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <button
                           className='btn btn-primary btn-block text-white btn-user'
                           type='submit'
+                          value={Login}
                         >
                           Login
                         </button>
                         <hr />
-                        <a
+                        {/* <a
                           className='btn btn-primary btn-block text-white btn-google btn-user'
                           role='button'
                         >
                           <i className='fab fa-google'></i>&nbsp; Login with
                           Google
-                        </a>
+                        </a> */}
                         <a
                           className='btn btn-primary btn-block text-white btn-facebook btn-user'
                           role='button'
@@ -88,9 +112,9 @@ export const Login = () => {
                         </a>
                       </div>
                       <div className='text-center'>
-                        <a className='small' href='register.html'>
+                        <Link className='small' to={'/register'}>
                           Create an Account!
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -102,4 +126,4 @@ export const Login = () => {
       </div>
     </div>
   );
-};
+}
