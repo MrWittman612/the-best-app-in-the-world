@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { response } from "express";
+import { response } from 'express';
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -13,17 +13,17 @@ export default function Register() {
   });
 
   const handleInputChange = (e) => {
-    setUser({...user, [e.target.name]: e.target.value})
-  }
-  
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      cosnt response = await axios.post('/api/register', user)
-      
+      const response = await axios.post('/api/register', user);
+      setAuthToken(response.data.token);
+      history.push('/');
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   };
 

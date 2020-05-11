@@ -9,17 +9,19 @@ export default function Login() {
   });
   console.log(user);
 
-  const updateUser = (e) => {
+  const handleInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const loginUser = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const result = axios.post('/api/login', user);
 
       console.log(result);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -43,26 +45,26 @@ export default function Login() {
                       <div className='text-center'>
                         <h4 className='text-dark mb-4'>Welcome Back!</h4>
                       </div>
-                      <form className='user' onSubmit={loginUser}>
+                      <form className='user' onSubmit={handleSubmit}>
                         <div className='form-group'>
                           <input
                             className='form-control form-control-user'
                             type='email'
-                            id='exampleInputEmail'
+                            id='email'
                             aria-describedby='emailHelp'
                             placeholder='Enter Email Address...'
                             name='email'
-                            onChange={updateUser}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className='form-group'>
                           <input
                             className='form-control form-control-user'
                             type='password'
-                            id='exampleInputPassword'
+                            id='password'
                             placeholder='Password'
                             name='password'
-                            onChange={updateUser}
+                            onChange={handleInputChange}
                           />
                         </div>
                         {/* <div className='form-group'>
