@@ -30,6 +30,8 @@ router.post('/login', async (req, res) => {
     }
 
     const token = newToken(user);
+    console.log('token login route', token);
+
     return res.status(200).send({ token });
   } catch (err) {
     return res.status(500);

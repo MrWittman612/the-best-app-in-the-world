@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { response } from 'express';
+import { Link, useHistory } from 'react-router-dom';
+import { setAuthToken } from '../../../utils/auth';
 
 export default function Register() {
-  const [user, setUser] = useState({
+  const [formData, setFormData] = useState({
     fname: '',
     lname: '',
     email: '',
@@ -12,14 +12,29 @@ export default function Register() {
     password2: '',
   });
 
+  let history = useHistory();
+
+  const { lname, fname, email, password, password2 } = formData;
+
   const handleInputChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.password2) {
+      return alert("Passwords don't match");
+    }
+    const user = {
+      name: `${fname} ${lname}`,
+      email: email,
+      password: password,
+    };
+
     try {
       const response = await axios.post('/api/register', user);
+
       setAuthToken(response.data.token);
       history.push('/');
     } catch (e) {
@@ -57,7 +72,8 @@ export default function Register() {
                               id='fname'
                               placeholder='First Name'
                               name='fname'
-                              value={user.fname}
+                              value={fname}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className='col-sm-6'>
@@ -67,7 +83,8 @@ export default function Register() {
                               id='lname'
                               placeholder='Last Name'
                               name='lname'
-                              value={user.lname}
+                              value={lname}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
@@ -75,11 +92,12 @@ export default function Register() {
                           <input
                             className='form-control form-control-user'
                             type='email'
-                            id='exampleInputEmail'
+                            id='email'
                             aria-describedby='emailHelp'
                             placeholder='Email Address'
                             name='email'
-                            value={user.email}
+                            value={email}
+                            onChange={handleInputChange}
                           />
                         </div>
                         <div className='form-group row'>
@@ -87,10 +105,11 @@ export default function Register() {
                             <input
                               className='form-control form-control-user'
                               type='password'
-                              id='examplePasswordInput'
+                              id='password'
                               placeholder='Password'
                               name='password'
-                              value={user.password}
+                              value={password}
+                              onChange={handleInputChange}
                             />
                           </div>
                           <div className='col-sm-6'>
@@ -100,7 +119,8 @@ export default function Register() {
                               id='password2'
                               placeholder='Repeat Password'
                               name='password2'
-                              value={user.password2}
+                              value={password2}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
@@ -122,6 +142,7 @@ export default function Register() {
                         <a
                           className='btn btn-primary btn-block text-white btn-facebook btn-user'
                           role='button'
+                          href={'#'}
                         >
                           <i className='fab fa-facebook-f'></i>&nbsp; Register
                           with Facebook

@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+import { setAuthToken } from '../../../utils/auth';
 
 export default function Login() {
-  const [user, setUser] = useState({
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  console.log(user);
+
+  const history = useHistory();
+
+  const { email, password } = formData;
 
   const handleInputChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const result = axios.post('/api/login', user);
 
-      console.log(result);
+    try {
+      const response = await axios.post('/api/login', formData);
+      setAuthToken(response.data.token);
+
+      history.push('/');
     } catch (e) {
       console.error(e);
     }
@@ -54,6 +61,7 @@ export default function Login() {
                             aria-describedby='emailHelp'
                             placeholder='Enter Email Address...'
                             name='email'
+                            value={email}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -64,6 +72,7 @@ export default function Login() {
                             id='password'
                             placeholder='Password'
                             name='password'
+                            value={password}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -87,7 +96,7 @@ export default function Login() {
                         <button
                           className='btn btn-primary btn-block text-white btn-user'
                           type='submit'
-                          value={Login}
+                          value='Login'
                         >
                           Login
                         </button>
@@ -109,9 +118,9 @@ export default function Login() {
                         <hr />
                       </form>
                       <div className='text-center'>
-                        <a className='small' href='forgot-password.html'>
+                        <Link className='small' to={'/forgot-password'}>
                           Forgot Password?
-                        </a>
+                        </Link>
                       </div>
                       <div className='text-center'>
                         <Link className='small' to={'/register'}>
