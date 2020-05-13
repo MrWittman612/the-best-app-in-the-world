@@ -5,14 +5,15 @@ import ForgotPassword from './components/authPages/forgot-password/ForgotPasswor
 
 import Login from './components/authPages/login/Login';
 import Register from './components/authPages/register/Register';
-// import logo from './logo.svg';
-// import './App.css';
+import { PrivateRoute } from './utils/PrivateRoute';
+import { checkAuth } from './utils/auth';
 
+checkAuth();
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path='/' component={DashBoard} />
+        <PrivateRoute exact path='/' component={DashBoard} />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
         <Route path='/forgot-password' component={ForgotPassword} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, Profiler } from 'react';
 import { Footer } from './navComponents/Footer';
 import { SideNavBar } from './navComponents/SideNavBar';
 import { DashboardTopNavBar } from './navComponents/DashboardTopNavBar';
@@ -12,8 +12,11 @@ import { RevenueChart } from './sections/RevenueChart';
 import { ProjectsBarChart } from './sections/ProjectsBarChart';
 import { ToDoListComponent } from './sections/ToDoListComponent';
 import { SectionComponent } from './sections/SectionComponent';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import Profile from '../pages/Profile';
 
 export function DashBoard() {
+  let { path } = useRouteMatch();
   return (
     <div id='wrapper'>
       <SideNavBar />
@@ -21,28 +24,14 @@ export function DashBoard() {
         <div id='content'>
           <DashboardTopNavBar />
           <div className='container-fluid'>
-            <TitleSection />
-            <div className='row' id='data-tracking-info'>
-              <EarningsTab />
-              <EarningsAnnual />
-              <Tasks />
-              <PendingRequests />
-            </div>
-
-            <div className='row'>
-              <EarningsLineChart />
-              <RevenueChart />{' '}
-            </div>
-
-            <div className='row'>
-              <div className='col-lg-6 mb-4'>
-                <ProjectsBarChart />
-                <ToDoListComponent />
-              </div>
-              <div className='col'>
-                <SectionComponent />
-              </div>
-            </div>
+            <Switch>
+              <Route path={path}>
+                <DashBoardMainView />
+              </Route>
+              <Route path={`${path}`}>
+                <Profile />
+              </Route>
+            </Switch>
           </div>
         </div>
         <Footer />
@@ -51,5 +40,34 @@ export function DashBoard() {
         <i className='fas fa-angle-up'></i>
       </a>
     </div>
+  );
+}
+
+function DashBoardMainView() {
+  return (
+    <Fragment>
+      <TitleSection />
+      <div className='row' id='data-tracking-info'>
+        <EarningsTab />
+        <EarningsAnnual />
+        <Tasks />
+        <PendingRequests />
+      </div>
+
+      <div className='row'>
+        <EarningsLineChart />
+        <RevenueChart />{' '}
+      </div>
+
+      <div className='row'>
+        <div className='col-lg-6 mb-4'>
+          <ProjectsBarChart />
+          <ToDoListComponent />
+        </div>
+        <div className='col'>
+          <SectionComponent />
+        </div>
+      </div>
+    </Fragment>
   );
 }
